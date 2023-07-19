@@ -24,7 +24,7 @@ In terms of hardware, the following are required:
 
 ## Software code
 
-The code used in the project can be found in the "software-code" file.
+The code used in the project can be found in the ["software-code" file](https://github.com/joaovitorgferreira/arduino-based-bioreactor/blob/main/software-code).
 
 ## Hardware structure
 
