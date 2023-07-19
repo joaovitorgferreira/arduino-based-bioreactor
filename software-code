@@ -1,0 +1,36 @@
+//Declaring the variables that store the pins connected to the relays and the button
+int PINO_RELE1 = A0;
+int PINO_RELE2 = A1;
+const int PINO_BOTAO = 9;
+
+void setup()
+{
+  // Configuring the pin connected to the relay module as an output and with the initial low logic level
+  pinMode(PINO_BOTAO, INPUT_PULLUP); //configure the button as an input pin
+  pinMode(PINO_RELE1, OUTPUT);
+  digitalWrite(PINO_RELE1, LOW);
+  pinMode(PINO_RELE2, OUTPUT);
+  digitalWrite(PINO_RELE2, LOW);
+}
+
+void loop() {
+  //Debouncing ensures that the button is actually pressed and that the pulse is not coming from a noise
+  if (digitalRead(PINO_BOTAO) == LOW){
+    delay(100); //milliseconds
+
+    //Trigger conditions
+    if (digitalRead(PINO_BOTAO) == LOW){ //if the button is pressed, the relay module will be turned on
+      digitalWrite(PINO_RELE1, HIGH);
+      Serial.println("Bomba 1 ligada");
+      //timeout = millis() + TEMPO_ACIONAMENTO;
+      delay(10000);
+      digitalWrite(PINO_RELE1, LOW);
+      Serial.println("Bomba 1 desligada");
+      delay(1000);
+      digitalWrite(PINO_RELE2, HIGH);
+      Serial.println("Bomba 2 ligada");
+      delay(10000);
+      digitalWrite(PINO_RELE2, LOW);
+      Serial.println("Bomba 2 desligada");}}
+  
+  }
