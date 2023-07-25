@@ -19,7 +19,7 @@ In terms of hardware, the following are required:
 - autoclavable silicone tubings
 - 3 spinner flasks of 250 ml
 - jumper wires
-- air compressor for aquarium (flow rate 1.5 L/min
+- air compressor for aquarium (flow rate 1.5 L/min)
 - 0.22 µm membrane filters
 
 ## Software code
