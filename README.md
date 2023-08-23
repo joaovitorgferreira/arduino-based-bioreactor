@@ -12,7 +12,7 @@ To adjust, adapt and/or transfer the code to the Arduino board, the following so
 
 In terms of hardware, the following are required:
 
-- 2 peristaltic pumps (flow rate 40 ml/min and 450 ml/min)
+- 2 peristaltic pumps (flow rate 450 ml/min)
 - 1 Arduino UNO board
 - 1 breadboard
 - 2 5V relay modules
