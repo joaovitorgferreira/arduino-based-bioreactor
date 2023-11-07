@@ -2,10 +2,10 @@
 int PINO_RELE1 = A0;
 int PINO_RELE2 = A1;
 const int PINO_BOTAO = 9;
-const unsigned long interval = 30000; //interval between cycles (milliseconds)
-const unsigned long Pumpinterval = 7000; //interval between pumps
-const unsigned long Pump1dur = 60000; //pump 1 activation duration
-const unsigned long Pump2dur = 20000; //pump 2 activation duration
+const unsigned long interval = 432000000; //interval between cycles (milliseconds)
+const unsigned long Pumpinterval = 500; //interval between pumps
+const unsigned long Pump1dur = 9009; //pump 1 activation duration
+const unsigned long Pump2dur = 9009; //pump 2 activation duration
 bool pumpActivated = false; //pump on state
 bool buttonNotPressed = true; //if the button was pressed before
 
@@ -23,17 +23,17 @@ void setup()
 void loop() {
   //debounce ensures that the button is actually pressed and that the pulse is not coming from a noise.
   if (digitalRead(PINO_BOTAO) == LOW){
-    delay(100);
+    delay(50);
     if (digitalRead(PINO_BOTAO) == LOW){ //if button is pressed, activates relay
       buttonNotPressed = false; //button pressed for the first time
-      digitalWrite(PINO_RELE1, HIGH); //activates first pump
-      delay(Pump1dur); //pump 1 activation duration
+      digitalWrite(PINO_RELE2, HIGH); //activates first pump
+      delay(300); //pump 2 activation duration
       pumpActivated = true; //pump on
-      digitalWrite(PINO_RELE1, LOW); //deactivates first pump
+      digitalWrite(PINO_RELE2, LOW); //deactivates first pump
       delay(Pumpinterval); // interval between activating the two pumps
-      digitalWrite(PINO_RELE2, HIGH);
-      delay(Pump2dur); // pump 2 activation duration
-      digitalWrite(PINO_RELE2, LOW);
+      digitalWrite(PINO_RELE1, HIGH);
+      delay(50); // pump 1 activation duration
+      digitalWrite(PINO_RELE1, LOW);
       pumpActivated = false; //state of both pumps being off
       delay(interval);
     }
@@ -41,14 +41,14 @@ void loop() {
 
   if (!buttonNotPressed){
     if (!pumpActivated) {
-      digitalWrite(PINO_RELE1, HIGH);
-      delay(Pump1dur);
-      pumpActivated = true;
-      digitalWrite(PINO_RELE1, LOW);
-      delay(Pumpinterval); // interval between activating the two pumps
       digitalWrite(PINO_RELE2, HIGH);
-      delay(Pump2dur); // pump 2 activation duration
+      delay(Pump2dur);
+      pumpActivated = true;
       digitalWrite(PINO_RELE2, LOW);
+      delay(Pumpinterval); // interval between activating the two pumps
+      digitalWrite(PINO_RELE1, HIGH);
+      delay(Pump1dur); // pump 1 activation duration
+      digitalWrite(PINO_RELE1, LOW);
       pumpActivated = false; //state of both pumps being off
       delay(interval);      
       }
