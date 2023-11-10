@@ -2,7 +2,7 @@
 int PINO_RELE1 = A0;
 int PINO_RELE2 = A1;
 const int PINO_BOTAO = 9;
-const unsigned long interval = 432000000; //interval between cycles (milliseconds)
+const unsigned long interval = 431981482; //interval between cycles (milliseconds)
 const unsigned long Pumpinterval = 500; //interval between pumps
 const unsigned long Pump1dur = 9009; //pump 1 activation duration
 const unsigned long Pump2dur = 9009; //pump 2 activation duration
