@@ -41,6 +41,20 @@ We use a USB cable between both Arduino and Raspberry Pi boards.
 ## Simple Serial communication from Arduino to Raspberry Pi
 
 - Connect the Arduino board to the computer using the USB cable, open the Arduino IDE and upload the simple-serial-arduino code to the board.
+- Unplug your Arduino board from your computer and connect it to the Pi board using the USB cable.
 - Open the Raspberry IDE (often called Thonny), and type the simple-serial-raspberry code.
+
+> Attention: The serial device name for the Arduino is typically '/dev/ttyACM0', '/dev/ttyUSB0', or something similar. You may need to adjust it in the code. To determine the appropriate one, open a terminal on the Raspberry Pi and execute the following command: ls /dev/tty*
+
+- Run the serial communication code in the Raspberry Pi's IDE. The output should be a sequence of "Hello from Arduino!"
+
+## Bidirectional Serial communication between Arduino and Raspberry Pi
+
+- Connect the Arduino board to the computer using the USB cable, open the Arduino IDE and upload the bidirectional-serial-arduino code to the board.
+- Unplug your Arduino board from your computer and connect it to the Pi board using the USB cable.
+- Open the Raspberry's IDE, and type the bidirectional-serial-raspberry code.
+- Run the serial communication code in the Raspberry Pi's IDE. The output should be a sequence of "You sent me: Hello from Raspberry Pi!"
+
+
 
 
