@@ -55,6 +55,10 @@ We use a USB cable between both Arduino and Raspberry Pi boards.
 - Open the Raspberry's IDE, and type the bidirectional-serial-raspberry code.
 - Run the serial communication code in the Raspberry Pi's IDE. The output should be a sequence of "You sent me: Hello from Raspberry Pi!"
 
+### Arduino-Raspberry Serial communication application
+
+
+
 
 
 
