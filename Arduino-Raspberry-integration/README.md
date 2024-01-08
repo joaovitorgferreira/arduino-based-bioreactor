@@ -57,6 +57,16 @@ We use a USB cable between both Arduino and Raspberry Pi boards.
 
 ### Arduino-Raspberry Serial communication application
 
+In this simple application, after a push button is pressed on the Arduino, the Raspberry Pi generates a random integer (1 to 4) and send it to the Arduino board, which then lights up the corresponding LED and turn off the others.
+
+To do so:
+
+- Make the following circuit:
+
+- Connect the Arduino board to the computer using the USB cable, open the Arduino IDE and upload the app-serial-arduino code to the board.
+- Unplug your Arduino board from your computer and connect it to the Pi board using the USB cable.
+- Open the Raspberry's IDE, and type the app-serial-raspberry code.
+- Run the serial communication code in the Raspberry Pi's IDE. In addition to the LED being illuminated, the output should state: "Button has been pressed. Sending number X to Arduino," where X represents a number ranging from 1 to 4.
 
 
 
