@@ -62,6 +62,8 @@ In this simple application, after a push button is pressed on the Arduino, the R
 To do so:
 
 - Make the following circuit:
+  
+![Untitled Sketch_bb](https://github.com/joaovitorgferreira/arduino-based-bioreactor/assets/90862308/b6cff327-76d6-4329-93c5-f5990f25960e)
 
 - Connect the Arduino board to the computer using the USB cable, open the Arduino IDE and upload the app-serial-arduino code to the board.
 - Unplug your Arduino board from your computer and connect it to the Pi board using the USB cable.
