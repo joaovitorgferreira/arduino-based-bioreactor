@@ -26,10 +26,10 @@ void loop() {
     delay(50);
     if (digitalRead(PINO_BOTAO) == LOW){ //if button is pressed, activates relay
       buttonNotPressed = false; //button pressed for the first time
-      digitalWrite(PINO_RELE2, HIGH); //activates first pump
+      digitalWrite(PINO_RELE2, HIGH); //activates second pump
       delay(300); //pump 2 activation duration
       pumpActivated = true; //pump on
-      digitalWrite(PINO_RELE2, LOW); //deactivates first pump
+      digitalWrite(PINO_RELE2, LOW); //deactivates second pump
       delay(Pumpinterval); // interval between activating the two pumps
       digitalWrite(PINO_RELE1, HIGH);
       delay(50); // pump 1 activation duration
