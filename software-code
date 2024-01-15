@@ -1,40 +1,102 @@
+// Declaring the intervals to be used on the pumps
+unsigned long interval = 431981482; //interval between cycles (milliseconds)
+unsigned long Pumpinterval = 500; //interval between pumps
+unsigned long Pump1dur = 9009; //pump 1 activation duration
+unsigned long Pump2dur = 9009; //pump 2 activation duration
+
+#include <stdlib.h>
+
+
+void updateIntervals() {
+  // Receive new values for intervals from Raspberry Pi
+  if (Serial.available() > 0) {
+    String command = Serial.readStringUntil('\n');
+    command.trim();  // Remove leading and trailing whitespace, including newline
+
+    if (command.startsWith("I")) {
+      // Update 'interval'
+      interval = strtoul(command.substring(1).c_str(), NULL, 10);
+      Serial.print("Updated interval to: ");
+      Serial.println(interval);
+    } else if (command.startsWith("P1")) {
+      // Update 'Pump1dur'
+      Pump1dur = strtoul(command.substring(2).c_str(), NULL, 10);
+      Serial.print("Updated Pump1dur to: ");
+      Serial.println(Pump1dur);
+    } else if (command.startsWith("P2")) {
+      // Update 'Pump2dur'
+      Pump2dur = strtoul(command.substring(2).c_str(), NULL, 10);
+      Serial.print("Updated Pump2dur to: ");
+      Serial.println(Pump2dur);
+    } else if (command.startsWith("Pi")) {
+      // Update 'Pumpinterval'
+      Pumpinterval = strtoul(command.substring(2).c_str(), NULL, 10);
+      Serial.print("Updated Pumpinterval to: ");
+      Serial.println(Pumpinterval);
+    } else {
+      Serial.println("Invalid command format");
+    }
+  }
+}
+
 // Declaring the variables that store the pins connected to the relays and the button
 int PINO_RELE1 = A0;
 int PINO_RELE2 = A1;
 const int PINO_BOTAO = 9;
-const unsigned long interval = 431981482; //interval between cycles (milliseconds)
-const unsigned long Pumpinterval = 500; //interval between pumps
-const unsigned long Pump1dur = 9009; //pump 1 activation duration
-const unsigned long Pump2dur = 9009; //pump 2 activation duration
 bool pumpActivated = false; //pump on state
 bool buttonNotPressed = true; //if the button was pressed before
 
-void setup()
-{
-  // Configures the pin connected to the relay as an output and with the initial low logic level
-  // and the pin connected to the button as input pin
-  pinMode(PINO_BOTAO, INPUT_PULLUP); 
-  pinMode(PINO_RELE1, OUTPUT);
+void everythingOFF(){
+
   digitalWrite(PINO_RELE1, LOW);
-  pinMode(PINO_RELE2, OUTPUT);
   digitalWrite(PINO_RELE2, LOW);
+  //digitalWrite (PINO_BOTAO, HIGH)
 }
 
+
+void setup() {
+  Serial.begin(9600); // Initialize serial communication
+  pinMode(PINO_BOTAO, INPUT_PULLUP);
+  pinMode(PINO_RELE1, OUTPUT);
+  pinMode(PINO_RELE2, OUTPUT);
+  everythingOFF();
+}
+
+
 void loop() {
-  //debounce ensures that the button is actually pressed and that the pulse is not coming from a noise.
-  if (digitalRead(PINO_BOTAO) == LOW){
+  updateIntervals();
+
+  // debounce ensures that the button is actually pressed and that the pulse is not coming from noise.
+  if (digitalRead(PINO_BOTAO) == LOW) {
     delay(50);
-    if (digitalRead(PINO_BOTAO) == LOW){ //if button is pressed, activates relay
-      buttonNotPressed = false; //button pressed for the first time
-      digitalWrite(PINO_RELE2, HIGH); //activates second pump
-      delay(300); //pump 2 activation duration
-      pumpActivated = true; //pump on
-      digitalWrite(PINO_RELE2, LOW); //deactivates second pump
+    if (digitalRead(PINO_BOTAO) == LOW) { // if button is pressed, activates relay
+      byte buttonStatus = digitalRead(PINO_BOTAO);
+      if (buttonStatus == LOW) {
+        Serial.println("The button has been pressed");
+      }
+      digitalWrite(PINO_RELE2, HIGH); // activates first pump
+      byte pump2Status = digitalRead(PINO_RELE2);
+      if (pump2Status == HIGH) {
+        Serial.println("Pump 2 activated");
+      }
+      delay(Pump2dur); // pump 2 activation duration
+      digitalWrite(PINO_RELE2, LOW); // deactivates first pump
+      byte pump2Status1 = digitalRead(PINO_RELE2);
+      if (pump2Status1 == LOW) {
+        Serial.println("Pump 2 deactivated");
+      }
       delay(Pumpinterval); // interval between activating the two pumps
       digitalWrite(PINO_RELE1, HIGH);
-      delay(50); // pump 1 activation duration
+      byte pump1Status = digitalRead(PINO_RELE1);
+      if (pump1Status == HIGH) {
+        Serial.println("Pump 1 activated");
+      }
+      delay(Pump1dur); // pump 1 activation duration
       digitalWrite(PINO_RELE1, LOW);
-      pumpActivated = false; //state of both pumps being off
+      byte pump1Status1 = digitalRead(PINO_RELE1);
+      if (pump1Status1 == LOW) {
+        Serial.println("Pump 1 deactivated");
+      }
       delay(interval);
     }
   }
@@ -54,5 +116,3 @@ void loop() {
       }
     }
   }
-
-
