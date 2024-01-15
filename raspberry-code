@@ -50,7 +50,7 @@ if __name__ == '__main__':
         print("Failed to open any serial port.")
         exit()
         
-    #ser = serial.Serial('/dev/ttyACM1', 9600, timeout=1)
+
     ser.reset_input_buffer()
     change_parameters()
     
