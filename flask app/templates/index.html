@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Control</title>
+</head>
+<body>
+    <a href="{{ url_for('monitor') }}" target="_blank">Open Serial Monitor</a>
+    <h1>Arduino Control</h1>
+    <form id="commandForm">
+        <label for="interval">Interval (I):</label>
+        <input type="text" id="interval" name="interval" required>
+        <br>
+        <label for="pump1dur">Pump 1 Duration (P1):</label>
+        <input type="text" id="pump1dur" name="pump1dur" required>
+        <br>
+        <label for="pump2dur">Pump 2 Duration (P2):</label>
+        <input type="text" id="pump2dur" name="pump2dur" required>
+        <br>
+        <label for="pumpinterval">Pump Interval (Pi):</label>
+        <input type="text" id="pumpinterval" name="pumpinterval" required>
+        <br>
+        <button type="button" onclick="sendCommand()">Send Command</button>
+    </form>
+    <script>
+        function sendCommand() {
+            var interval = document.getElementById('interval').value;
+            var pump1dur = document.getElementById('pump1dur').value;
+            var pump2dur = document.getElementById('pump2dur').value;
+            var pumpinterval = document.getElementById('pumpinterval').value;
+    
+            var interval_ms = interval*24*60*60*1000
+            var pump1dur_ms = pump1dur*1000
+            var pump2dur_ms = pump2dur*1000
+            var pumpinterval_ms = pumpinterval*1000
+
+            // Construct a command string dynamically based on provided values
+            var command = '';
+            if (interval !== '') {
+                command += `I${interval_ms} `;
+            }
+            if (pump1dur !== '') {
+                command += `P1${pump1dur_ms} `;
+            }
+            if (pump2dur !== '') {
+                command += `P2${pump2dur_ms} `;
+            }
+            if (pumpinterval !== '') {
+                command += `Pi${pumpinterval_ms}`;
+            }
+    
+            fetch('/send_commands', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'commands=' + encodeURIComponent(command),
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+            });
+        }
+    </script>
+</body>
+</html>

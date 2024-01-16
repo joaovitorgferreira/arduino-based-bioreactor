@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serial Monitor</title>
+</head>
+<body>
+    <h1>Serial Monitor</h1>
+    <div id="log"></div>
+    <script>
+        function updateLog(message) {
+            var logElement = document.getElementById('log');
+            logElement.innerHTML += message + '<br>';
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        // Fetch serial messages and update the log every second
+        function fetchSerialMessages() {
+            fetch('/get_serial_messages')
+                .then(response => response.json())
+                .then(data => {
+                    updateLog(data.message);
+                });
+        }
+
+        // Update the log periodically
+        setInterval(fetchSerialMessages, 1000);
+    </script>
+</body>
+</html>
