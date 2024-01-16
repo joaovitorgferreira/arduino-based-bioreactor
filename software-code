@@ -16,22 +16,22 @@ void updateIntervals() {
     if (command.startsWith("I")) {
       // Update 'interval'
       interval = strtoul(command.substring(1).c_str(), NULL, 10);
-      Serial.print("Updated interval to: ");
+      Serial.print("Updated Interval between cycles to: ");
       Serial.println(interval);
     } else if (command.startsWith("P1")) {
       // Update 'Pump1dur'
       Pump1dur = strtoul(command.substring(2).c_str(), NULL, 10);
-      Serial.print("Updated Pump1dur to: ");
+      Serial.print("Updated Pump 1 activation time to: ");
       Serial.println(Pump1dur);
     } else if (command.startsWith("P2")) {
       // Update 'Pump2dur'
       Pump2dur = strtoul(command.substring(2).c_str(), NULL, 10);
-      Serial.print("Updated Pump2dur to: ");
+      Serial.print("Updated Pump 2 activation time to: ");
       Serial.println(Pump2dur);
     } else if (command.startsWith("Pi")) {
       // Update 'Pumpinterval'
       Pumpinterval = strtoul(command.substring(2).c_str(), NULL, 10);
-      Serial.print("Updated Pumpinterval to: ");
+      Serial.print("Updated Interval between pump activation to: ");
       Serial.println(Pumpinterval);
     } else {
       Serial.println("Invalid command format");
@@ -74,13 +74,13 @@ void loop() {
       if (buttonStatus == LOW) {
         Serial.println("The button has been pressed");
       }
-      digitalWrite(PINO_RELE2, HIGH); // activates first pump
+      digitalWrite(PINO_RELE2, HIGH); // activates second pump
       byte pump2Status = digitalRead(PINO_RELE2);
       if (pump2Status == HIGH) {
         Serial.println("Pump 2 activated");
       }
       delay(Pump2dur); // pump 2 activation duration
-      digitalWrite(PINO_RELE2, LOW); // deactivates first pump
+      digitalWrite(PINO_RELE2, LOW); // deactivates second pump
       byte pump2Status1 = digitalRead(PINO_RELE2);
       if (pump2Status1 == LOW) {
         Serial.println("Pump 2 deactivated");
@@ -104,13 +104,25 @@ void loop() {
   if (!buttonNotPressed){
     if (!pumpActivated) {
       digitalWrite(PINO_RELE2, HIGH);
+      byte pump2Status = digitalRead(PINO_RELE2);
+      if (pump2Status == HIGH) {
+        Serial.println("Pump 2 activated");}
       delay(Pump2dur);
       pumpActivated = true;
       digitalWrite(PINO_RELE2, LOW);
+      byte pump2Status1 = digitalRead(PINO_RELE2);
+      if (pump2Status1 == LOW) {
+        Serial.println("Pump 2 deactivated");}
       delay(Pumpinterval); // interval between activating the two pumps
       digitalWrite(PINO_RELE1, HIGH);
+      byte pump1Status = digitalRead(PINO_RELE1);
+      if (pump1Status == HIGH) {
+        Serial.println("Pump 1 activated");}
       delay(Pump1dur); // pump 1 activation duration
       digitalWrite(PINO_RELE1, LOW);
+      byte pump1Status1 = digitalRead(PINO_RELE1);
+      if (pump1Status1 == LOW) {
+        Serial.println("Pump 1 deactivated");}
       pumpActivated = false; //state of both pumps being off
       delay(interval);      
       }
