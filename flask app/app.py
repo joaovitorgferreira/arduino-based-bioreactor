@@ -51,4 +51,4 @@ def send_commands():
     return {'status': 'success'}
 
 if __name__ == '__main__':
-        app.run(debug=True)
+        app.run(port=5100, debug=True)
