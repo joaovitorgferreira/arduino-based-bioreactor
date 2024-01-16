@@ -9,20 +9,21 @@
 <body>
     <a href="{{ url_for('monitor') }}" target="_blank">Open Serial Monitor</a>
     <h1>Arduino Control</h1>
+    <p>To update the time parameters, please input only numerical values into the fields below.</p>
     <form id="commandForm">
-        <label for="interval">Interval (I):</label>
+        <label for="interval">Interval between cycles (days):</label>
         <input type="text" id="interval" name="interval" required>
         <br>
-        <label for="pump1dur">Pump 1 Duration (P1):</label>
+        <label for="pump1dur">Pump 1 activation time (seconds):</label>
         <input type="text" id="pump1dur" name="pump1dur" required>
         <br>
-        <label for="pump2dur">Pump 2 Duration (P2):</label>
+        <label for="pump2dur">Pump 2 activation time (seconds):</label>
         <input type="text" id="pump2dur" name="pump2dur" required>
         <br>
-        <label for="pumpinterval">Pump Interval (Pi):</label>
+        <label for="pumpinterval">Interval between pump activation (seconds):</label>
         <input type="text" id="pumpinterval" name="pumpinterval" required>
         <br>
-        <button type="button" onclick="sendCommand()">Send Command</button>
+        <button type="button" onclick="sendCommand()">Update parameters</button>
     </form>
     <script>
         function sendCommand() {
@@ -31,6 +32,7 @@
             var pump2dur = document.getElementById('pump2dur').value;
             var pumpinterval = document.getElementById('pumpinterval').value;
     
+            // Convert input to milisseconds 
             var interval_ms = interval*24*60*60*1000
             var pump1dur_ms = pump1dur*1000
             var pump2dur_ms = pump2dur*1000
