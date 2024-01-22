@@ -5,14 +5,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serial Monitor</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #9CA098;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0A0D07;
+        }
+
+        #container {
+            display: inline-block;
+            text-align: left;
+            background-color: #92968E;
+            padding: 20px;
+            color: #0A0D07;
+        }
+
+        .message-container {
+            background-color: #92968E;
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
     <h1>Serial Monitor</h1>
-    <div id="log"></div>
+    <div id="log">
+        <div id="container"></div>
+    </div>
     <script>
         function updateLog(message) {
-            var logElement = document.getElementById('log');
-            logElement.innerHTML += message + '<br>';
+            var logElement = document.getElementById('container');
+            var messageContainer = document.createElement('div');
+            messageContainer.className = 'message-container';
+            messageContainer.innerHTML = message;
+            logElement.appendChild(messageContainer);
             logElement.scrollTop = logElement.scrollHeight;
         }
 
