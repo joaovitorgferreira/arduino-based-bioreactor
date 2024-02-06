@@ -2,9 +2,12 @@ from flask import Flask, render_template, request, jsonify
 import serial
 import time
 from datetime import datetime
+import csv
+import os
 
 app = Flask(__name__)
 
+#Detecting which USB port is being used
 possible_ports = ['/dev/ttyACM0', '/dev/ttyACM1', '/dev/ttyUSB0']
 baud_rate = 9600
 ser = None
@@ -20,6 +23,13 @@ if ser is None:
     print("Failed to open any serial port.")
     exit()
 
+#Function to write received data to CSV file
+def write_to_csv(message):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open('messages.csv', 'a', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([timestamp, message])
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -29,10 +39,11 @@ def get_serial_messages():
     if ser is not None and ser.in_waiting > 0:
         line = ser.readline().decode('utf-8').rstrip()
         if line:
+            write_to_csv(line)
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             message = f"[{timestamp}] {line}"
             return jsonify({'message': message})
-        return jsonify({'message': ''})
+    return jsonify({'message': ''})
 
 @app.route('/monitor')
 def monitor():
@@ -50,5 +61,9 @@ def send_commands():
 
     return {'status': 'success'}
 
+@app.route('/download_csv')
+def download_csv():
+    return send_file('messages.csv', as_attachment=True)
+
 if __name__ == '__main__':
-        app.run(port=5100, debug=True)
+    app.run(host = '143.107.203.195', port=5100, debug=True)
