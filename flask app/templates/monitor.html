@@ -29,6 +29,16 @@
             padding: 5px;
             margin-bottom: 5px;
         }
+        
+        .download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #535750;
+            color: #E7E8E6;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -36,6 +46,7 @@
     <div id="log">
         <div id="container"></div>
     </div>
+    <button class="download-btn" onclick="downloadCSV()">Download Messages</button>
     <script>
         function updateLog(message) {
             var logElement = document.getElementById('container');
@@ -49,14 +60,31 @@
         // Fetch serial messages and update the log every second
         function fetchSerialMessages() {
             fetch('/get_serial_messages')
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    updateLog(data.message);
+                    if (data.message !== '') {
+                        updateLog(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching serial messages:', error);
                 });
         }
 
         // Update the log periodically
         setInterval(fetchSerialMessages, 1000);
+
+        // Function to download CSV file
+        function downloadCSV() {
+            window.location.href = '/download_csv';
+        }
     </script>
 </body>
 </html>
+
+
