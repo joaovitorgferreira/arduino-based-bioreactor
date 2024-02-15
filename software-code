@@ -1,8 +1,8 @@
 // Declaring the intervals to be used on the pumps
-unsigned long interval = 431981482; //interval between cycles (milliseconds)
-unsigned long Pumpinterval = 500; //interval between pumps
+unsigned long interval = 431915991; //interval between cycles (milliseconds)
+unsigned long Pumpinterval = 60000; //interval between pumps
 unsigned long Pump1dur = 9009; //pump 1 activation duration
-unsigned long Pump2dur = 9009; //pump 2 activation duration
+unsigned long Pump2dur = 15000; //pump 2 activation duration
 
 #include <stdlib.h>
 
@@ -74,13 +74,14 @@ void loop() {
       if (buttonStatus == LOW) {
         Serial.println("The button has been pressed");
       }
-      digitalWrite(PINO_RELE2, HIGH); // activates second pump
+      delay(48420000);
+      digitalWrite(PINO_RELE2, HIGH); // activates first pump
       byte pump2Status = digitalRead(PINO_RELE2);
       if (pump2Status == HIGH) {
         Serial.println("Pump 2 activated");
       }
       delay(Pump2dur); // pump 2 activation duration
-      digitalWrite(PINO_RELE2, LOW); // deactivates second pump
+      digitalWrite(PINO_RELE2, LOW); // deactivates first pump
       byte pump2Status1 = digitalRead(PINO_RELE2);
       if (pump2Status1 == LOW) {
         Serial.println("Pump 2 deactivated");
