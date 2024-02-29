@@ -13,14 +13,18 @@ To adjust, adapt and/or transfer the code to the Arduino board, the following so
 In terms of hardware, the following are required:
 
 - 2 peristaltic pumps (flow rate 450 ml/min)
+- 1 magnetic stirrer
+- 1 heated magnetic stirrer
 - 1 Arduino UNO board
 - 1 breadboard
 - 2 5V relay modules
 - autoclavable silicone tubings
 - 3 500ml reagent bottles
+- 3 customized Teflon caps
+- 8 customized stainless steel cannulas
 - jumper wires
 - air compressor for aquarium (flow rate 1.5 L/min)
-- 0.22 µm membrane filters
+- 3 0.22 µm membrane filters
 - Raspberry Pi board (any model)
 
 ## Software code
