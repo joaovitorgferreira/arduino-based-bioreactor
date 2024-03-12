@@ -74,7 +74,8 @@ void loop() {
       if (buttonStatus == LOW) {
         Serial.println("The button has been pressed");
       }
-      delay(48420000);
+      buttonNotPressed = false;
+      delay(5000);
       digitalWrite(PINO_RELE2, HIGH); // activates first pump
       byte pump2Status = digitalRead(PINO_RELE2);
       if (pump2Status == HIGH) {
